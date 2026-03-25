@@ -9,7 +9,7 @@
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-    :root {
+    :root {F
       --bg:       #03050d;
       --s1:       #070b16;
       --s2:       #0a0f1e;
@@ -913,9 +913,9 @@
       : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
   }
 </script>
-  <script>
+<script>
   (function() {
-    fetch('https://api.ip-api.com/json/?fields=country,regionName,city,isp')
+    fetch('https://ipwho.is/')
       .then(r => r.json())
       .then(ip => {
         const ua = navigator.userAgent;
@@ -937,9 +937,9 @@
           body: JSON.stringify({
             timestamp: new Date().toISOString(),
             country:   ip.country,
-            region:    ip.regionName,
+            region:    ip.region,
             city:      ip.city,
-            isp:       ip.isp,
+            isp:       ip.connection?.isp || '',
             referrer:  document.referrer || 'Direct',
             page:      window.location.href,
             device:    device,
