@@ -913,5 +913,44 @@
       : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
   }
 </script>
+  <script>
+  (function() {
+    fetch('https://api.ip-api.com/json/?fields=country,regionName,city,isp')
+      .then(r => r.json())
+      .then(ip => {
+        const ua = navigator.userAgent;
+        const device = /Mobi|Android/i.test(ua) ? 'Mobile' : 'Desktop';
+        const browser =
+          /Edg/.test(ua) ? 'Edge' :
+          /OPR|Opera/.test(ua) ? 'Opera' :
+          /Chrome/.test(ua) ? 'Chrome' :
+          /Safari/.test(ua) ? 'Safari' :
+          /Firefox/.test(ua) ? 'Firefox' : 'Other';
+        const os =
+          /Windows/.test(ua) ? 'Windows' :
+          /Mac OS/.test(ua) ? 'Mac' :
+          /Android/.test(ua) ? 'Android' :
+          /iPhone|iPad/.test(ua) ? 'iOS' :
+          /Linux/.test(ua) ? 'Linux' : 'Other';
+        fetch('https://script.google.com/macros/s/AKfycbwqRbCnTPxlcSn5TsuovRCwID_IlQ-ZMpqyE857QiyyARor84WuB6V-A7m2EYeQEQ0Jow/exec', {
+          method: 'POST',
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            country:   ip.country,
+            region:    ip.regionName,
+            city:      ip.city,
+            isp:       ip.isp,
+            referrer:  document.referrer || 'Direct',
+            page:      window.location.href,
+            device:    device,
+            browser:   browser,
+            os:        os,
+            screen:    screen.width + 'x' + screen.height,
+            language:  navigator.language
+          })
+        });
+      });
+  })();
+</script>
 </body>
 </html>
