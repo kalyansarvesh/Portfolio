@@ -108,6 +108,7 @@
       text-decoration:none; transition:all .22s var(--ease); background:transparent; flex-shrink:0;
     }
     .nav-resume:hover { background:var(--blue); border-color:var(--blue); color:var(--bg) }
+    .nav-end { display:flex; align-items:center; gap:.6rem; flex-shrink:0 }
 
     /* FIX 6 — hamburger (mobile only) */
     .nav-hamburger {
@@ -467,6 +468,41 @@
       footer { padding:1.4rem 1.5rem; flex-direction:column; gap:.8rem; text-align:center }
     }
 
+    /* ── LIGHT THEME ── */
+    html.light {
+      --bg:       #f2f5fc;
+      --s1:       #e8edf8;
+      --s2:       #dde4f4;
+      --b1:       #ccd6ec;
+      --b2:       #b8c8e2;
+      --muted:    #8099ba;
+      --sub:      #4a6080;
+      --dim:      #2a3f60;
+      --text:     #0c1828;
+      --blue:     #2a5fc0;
+      --blueb:    #1a4aaa;
+      --bluedim:  rgba(42,95,192,.1);
+      --blueglow: rgba(42,95,192,.22);
+    }
+    html.light body::before { opacity:.15 }
+    html.light .hero-grid { opacity:.3 }
+    html.light nav { background:rgba(242,245,252,.9) }
+    html.light .hero-surname {
+      background:linear-gradient(120deg, var(--text) 0%, var(--blue) 60%, var(--blueb) 100%);
+      -webkit-background-clip:text; background-clip:text;
+    }
+    html.light .project-media img { filter:brightness(.92) saturate(.8) contrast(1.05) }
+    html.light .project-card:hover .project-media img { filter:brightness(1) saturate(1) }
+    html.light .about-portrait-inner { background:repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,0,0,.02) 20px, rgba(0,0,0,.02) 21px) }
+
+    /* THEME TOGGLE BUTTON */
+    #themeToggle {
+      width:28px; height:28px; border:1px solid var(--b2); background:transparent;
+      color:var(--dim); display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .22s var(--ease); flex-shrink:0;
+    }
+    #themeToggle:hover { border-color:var(--blue); color:var(--blueb); box-shadow:0 0 10px var(--blueglow) }
+
     @media (max-width:480px) {
       h1.hero-name { font-size:3rem }
       .hero-surname { font-size:2.7rem }
@@ -493,10 +529,15 @@
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="assets/resume.pdf" target="_blank" class="nav-resume">Resume ↓</a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-end">
+    <a href="assets/resume.pdf" target="_blank" class="nav-resume">Resume ↓</a>
+    <button id="themeToggle" aria-label="Toggle theme">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- MOBILE MENU OVERLAY -->
@@ -762,7 +803,7 @@
   <div class="contact-heading reveal" style="transition-delay:.1s">LET'S BUILD<br>SOMETHING <span>DATA-DRIVEN.</span></div>
   <p class="contact-sub reveal" style="transition-delay:.2s">Open to senior BI roles, freelance dashboards,<br>and Power Platform consulting.</p>
   <div class="contact-links reveal" style="transition-delay:.3s">
-    <a href="mailto:sarveshkalyan@gmail.com" class="btn btn-primary"><span class="btn-fill"></span>Email Me</a>
+    <a href="/cdn-cgi/l/email-protection#6e1d0f1c180b1d06050f02170f002e09030f0702400d0103" class="btn btn-primary"><span class="btn-fill"></span>Email Me</a>
     <a href="https://linkedin.com/in/sarveshkalyan" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>LinkedIn</a>
     <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>Tableau Public</a>
     <a href="assets/resume.pdf" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>Resume PDF</a>
@@ -775,7 +816,10 @@
   <span class="footer-text">Vancouver, Canada</span>
 </footer>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script data-goatcounter="https://kalyansarvesh.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
+  
   // FIX 7 — cursor only on real pointer/hover devices
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const cursorDot  = document.getElementById('cursor');
@@ -851,6 +895,23 @@
   document.getElementById('certsNext').addEventListener('click', () => goTo(idx + 1));
   buildDots();
   window.addEventListener('resize', () => { idx = 0; goTo(0); });
+
+  // THEME TOGGLE
+  const themeBtn = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.documentElement.classList.add('light');
+  updateIcon();
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateIcon();
+  });
+  function updateIcon() {
+    const isLight = document.documentElement.classList.contains('light');
+    themeBtn.innerHTML = isLight
+      ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
+      : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  }
 </script>
 </body>
 </html>
