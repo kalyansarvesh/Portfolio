@@ -9,13 +9,12 @@
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-    :root {F
+    :root {
       --bg:       #03050d;
       --s1:       #070b16;
       --s2:       #0a0f1e;
       --b1:       #0f1828;
       --b2:       #182234;
-      /* FIX 1 — lifted all dim/sub/muted so text is actually readable */
       --muted:    #4a6a8a;
       --sub:      #8aa8c8;
       --dim:      #a8c0d8;
@@ -52,7 +51,6 @@
       90%{transform:translate(3%,4%)} 100%{transform:translate(-2%,-1%)}
     }
 
-    /* FIX 7 — cursor ONLY on true pointer devices, hidden on touch */
     @media (hover: hover) and (pointer: fine) {
       #cursor {
         position:fixed; z-index:9999; width:7px; height:7px; border-radius:50%;
@@ -72,14 +70,12 @@
       .project-card { cursor:pointer }
     }
 
-    /* PROGRESS */
     #progress {
       position:fixed; top:0; left:0; right:0; height:1px; z-index:500;
       background:linear-gradient(90deg, var(--blue), var(--blueb), var(--blue));
       transform-origin:left; transform:scaleX(0); box-shadow:0 0 8px var(--blueb);
     }
 
-    /* NAV */
     nav {
       position:fixed; top:0; left:0; right:0; z-index:200; height:62px;
       display:flex; align-items:center; justify-content:space-between; padding:0 4rem;
@@ -110,15 +106,13 @@
     .nav-resume:hover { background:var(--blue); border-color:var(--blue); color:var(--bg) }
     .nav-end { display:flex; align-items:center; gap:.6rem; flex-shrink:0 }
 
-    /* FIX 6 — hamburger (mobile only) */
     .nav-hamburger {
       display:none; flex-direction:column; gap:5px; background:none; border:none;
       cursor:pointer; padding:8px; z-index:300; flex-shrink:0;
     }
     .nav-hamburger span {
       display:block; width:24px; height:2px; background:var(--blueb);
-      transition:all .3s var(--ease); transform-origin:center;
-      border-radius:1px;
+      transition:all .3s var(--ease); transform-origin:center; border-radius:1px;
     }
     .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg) }
     .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0) }
@@ -140,7 +134,6 @@
       border:1px solid var(--blue); color:var(--blueb);
     }
 
-    /* HERO */
     #hero {
       min-height:100vh; display:flex; align-items:center;
       padding:0 4rem; padding-top:62px; position:relative; overflow:hidden;
@@ -185,7 +178,6 @@
       filter:drop-shadow(0 0 28px rgba(122,174,245,.2));
       animation:fadeUp .8s var(--ease) .38s both;
     }
-    /* FIX 2 — bigger hero role text */
     .hero-role {
       font-family:var(--mono); font-size:.82rem; color:var(--dim);
       margin:2.2rem 0 3rem; line-height:2.4; animation:fadeUp .7s var(--ease) .52s both;
@@ -194,7 +186,6 @@
     .hero-cta { display:flex; gap:.75rem; animation:fadeUp .7s var(--ease) .65s both }
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
 
-    /* BUTTONS */
     .btn {
       font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
       padding:.85rem 2rem; border:1px solid; text-decoration:none; transition:all .25s;
@@ -209,7 +200,6 @@
     .btn-ghost .btn-fill { background:rgba(77,127,214,.1) }
     .btn-ghost:hover { color:var(--text); border-color:var(--blue) }
 
-    /* TICKER */
     .ticker-wrap {
       background:var(--s1); border-top:1px solid var(--b1); border-bottom:1px solid var(--b1);
       overflow:hidden; padding:.72rem 0; position:relative; z-index:2;
@@ -221,26 +211,21 @@
     .ticker-wrap::after  { right:0; background:linear-gradient(-90deg, var(--s1), transparent) }
     .ticker { display:flex; animation:ticker 36s linear infinite; width:max-content }
     .ticker-wrap:hover .ticker { animation-play-state:paused }
-    /* FIX 2 — bigger ticker */
     .ticker-item { font-family:var(--mono); font-size:.68rem; color:var(--sub); padding:0 2.8rem; letter-spacing:.1em; white-space:nowrap }
     .ticker-item span { color:var(--blue); margin-right:.5rem }
     @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    /* SECTIONS */
     section { position:relative; z-index:2 }
     .section-header { display:flex; align-items:baseline; gap:1.2rem; margin-bottom:4rem }
     .section-num { font-family:var(--mono); font-size:.62rem; color:var(--blue); letter-spacing:.16em; opacity:.8 }
     .section-title { font-family:var(--display); font-size:clamp(1.8rem,3.2vw,2.9rem); color:var(--text); letter-spacing:.08em }
     .section-line { flex:1; height:1px; background:linear-gradient(90deg, var(--b2), transparent); max-width:240px }
 
-    /* REVEAL */
     .reveal { opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease) }
     .reveal.visible { opacity:1; transform:none }
     .reveal-left { opacity:0; transform:translateX(-28px); transition:opacity .8s var(--ease), transform .8s var(--ease) }
     .reveal-left.visible { opacity:1; transform:none }
 
-    /* ABOUT */
-    /* FIX 8 — slightly smaller portrait column on desktop */
     #about { padding:9rem 4rem; display:grid; grid-template-columns:210px 1fr; gap:6rem; align-items:start }
     .about-portrait { width:100%; aspect-ratio:3/4; background:var(--s2); border:1px solid var(--b2); position:relative; overflow:hidden }
     .about-portrait::after {
@@ -256,7 +241,6 @@
     .pc-tl { top:0; left:0; border-width:1px 0 0 1px }
     .pc-br { bottom:0; right:0; border-width:0 1px 1px 0 }
 
-    /* FIX 2+9 — bigger text, justified */
     .about-bio {
       font-family:var(--serif); font-size:1.18rem; font-weight:400; font-style:italic;
       line-height:2.05; color:var(--dim); margin-bottom:1.5rem;
@@ -267,7 +251,6 @@
       line-height:2.1; margin-bottom:1.4rem;
     }
 
-    /* FIX 3 — ALL chips in highlighted state */
     .skills-grid { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.4rem; align-items:flex-start }
     .skill-chip {
       font-family:var(--mono); font-size:.67rem; letter-spacing:.08em;
@@ -279,7 +262,6 @@
     }
     .skill-chip:hover { background:rgba(77,127,214,.2); box-shadow:0 0 16px rgba(77,127,214,.2); color:var(--text); border-color:var(--blueb) }
 
-    /* CAREER */
     #career { padding:7rem 4rem; background:var(--s1); border-top:1px solid var(--b1); border-bottom:1px solid var(--b1) }
     .timeline { position:relative; padding-left:1.5rem; max-width:800px }
     .timeline::before {
@@ -289,7 +271,6 @@
     .tl-item { position:relative; padding:0 0 3.5rem 3rem; transition:opacity .75s var(--ease), transform .75s var(--ease) }
     .tl-item.visible { opacity:1; transform:none }
 
-    /* FIX 10 — pulsating career dot */
     .tl-dot {
       position:absolute; left:-5px; top:5px; width:10px; height:10px; border-radius:50%;
       background:var(--blueb); border:2px solid var(--bg);
@@ -301,16 +282,13 @@
       100% { box-shadow:0 0 0 0   rgba(122,174,245,.7), 0 0 12px rgba(122,174,245,.4) }
     }
 
-    /* FIX 2 — bigger career text */
     .tl-date { font-family:var(--mono); font-size:.65rem; color:var(--blue); letter-spacing:.13em; margin-bottom:.45rem }
     .tl-role { font-family:var(--sans); font-size:1.28rem; font-weight:700; color:var(--text); margin-bottom:.2rem }
     .tl-company { font-family:var(--mono); font-size:.73rem; color:var(--sub); margin-bottom:.95rem }
-
     .tl-desc { font-size:.9rem; color:var(--dim); line-height:2; max-width:580px }
     .tl-tags { display:flex; gap:.38rem; flex-wrap:wrap; margin-top:1rem }
     .tl-tag { font-family:var(--mono); font-size:.6rem; padding:.2rem .65rem; background:rgba(77,127,214,.09); border:1px solid rgba(77,127,214,.22); color:var(--blueb); letter-spacing:.06em }
 
-    /* CERTIFICATIONS */
     #certifications { padding:7rem 4rem; background:var(--s1); border-top:1px solid var(--b1); border-bottom:1px solid var(--b1) }
     .certs-slider-wrap { position:relative }
     .certs-track-outer { overflow:hidden }
@@ -355,7 +333,6 @@
     }
     .certs-arrow:hover { border-color:var(--blue); color:var(--blueb); box-shadow:0 0 12px var(--blueglow) }
 
-    /* PROJECTS */
     #projects { padding:7rem 4rem }
     .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--b1); border:1px solid var(--b1); overflow:hidden }
     .project-card {
@@ -384,7 +361,6 @@
     .project-card:hover .project-media::after { background:linear-gradient(transparent, var(--s2)) }
     .project-body { padding:1.5rem 1.6rem 1.6rem; flex:1; display:flex; flex-direction:column }
     .project-title { font-family:var(--sans); font-size:1rem; font-weight:700; color:var(--text); margin-bottom:.6rem; line-height:1.35 }
-    /* FIX 2+9 — bigger justified project desc */
     .project-desc { font-family:var(--mono); font-size:.73rem; color:var(--sub); line-height:2; margin-bottom:1.3rem; flex:1 }
     .project-footer { display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--b1); padding-top:.85rem }
     .project-tools { display:flex; gap:.3rem; flex-wrap:wrap }
@@ -397,7 +373,6 @@
     }
     .project-card:hover .project-link { border-color:var(--blueb); color:var(--blueb); transform:rotate(45deg); box-shadow:0 0 12px var(--blueglow) }
 
-    /* EDUCATION */
     #education { padding:3.5rem 4rem; background:var(--s1); border-top:1px solid var(--b1); border-bottom:1px solid var(--b1) }
     .edu-row { display:flex; align-items:stretch }
     .edu-item { flex:1; padding:1.4rem 2.4rem; border-left:1px solid var(--b2); transition:border-color .3s var(--ease) }
@@ -408,7 +383,6 @@
     .edu-detail { font-family:var(--mono); font-size:.64rem; color:var(--sub) }
     .edu-divider { width:1px; background:var(--b2); flex-shrink:0 }
 
-    /* CONTACT */
     #contact { padding:10rem 4rem; text-align:center; position:relative; overflow:hidden }
     #contact::before {
       content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -430,13 +404,11 @@
     .contact-sub { font-family:var(--mono); font-size:.75rem; color:var(--sub); margin-bottom:3.5rem; line-height:2.2 }
     .contact-links { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap }
 
-    /* FOOTER */
     footer { border-top:1px solid var(--b1); padding:1.4rem 4rem; display:flex; align-items:center; justify-content:space-between; background:var(--s1); position:relative; z-index:2 }
     .footer-text { font-family:var(--mono); font-size:.61rem; color:var(--sub); letter-spacing:.08em }
     .footer-pulse { display:flex; align-items:center; gap:.5rem }
     .pulse-dot { width:5px; height:5px; border-radius:50%; background:var(--blueb); box-shadow:0 0 7px var(--blueb); animation:blink 2s ease infinite }
 
-    /* FIX 6 — MOBILE RESPONSIVE */
     @media (max-width:1000px) {
       nav { padding:0 1.5rem }
       .nav-links { display:none }
@@ -468,7 +440,7 @@
       footer { padding:1.4rem 1.5rem; flex-direction:column; gap:.8rem; text-align:center }
     }
 
-    /* ── LIGHT THEME ── */
+    /* LIGHT THEME */
     html.light {
       --bg:       #f2f5fc;
       --s1:       #e8edf8;
@@ -495,7 +467,6 @@
     html.light .project-card:hover .project-media img { filter:brightness(1) saturate(1) }
     html.light .about-portrait-inner { background:repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,0,0,.02) 20px, rgba(0,0,0,.02) 21px) }
 
-    /* THEME TOGGLE BUTTON */
     #themeToggle {
       width:28px; height:28px; border:1px solid var(--b2); background:transparent;
       color:var(--dim); display:flex; align-items:center; justify-content:center;
@@ -540,7 +511,6 @@
   </div>
 </nav>
 
-<!-- MOBILE MENU OVERLAY -->
 <div class="nav-mobile-menu" id="mobileMenu">
   <a href="#about"          onclick="closeMob()">About</a>
   <a href="#career"         onclick="closeMob()">Career</a>
@@ -551,7 +521,6 @@
   <a href="assets/resume.pdf" target="_blank" class="mob-resume" onclick="closeMob()">Resume ↓</a>
 </div>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow g1"></div>
@@ -573,7 +542,6 @@
   </div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker">
     <div class="ticker-item"><span>—</span>Microsoft Power BI</div><div class="ticker-item"><span>—</span>Microsoft Fabric</div>
@@ -589,7 +557,6 @@
   </div>
 </div>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="reveal-left">
     <div class="about-portrait">
@@ -606,8 +573,6 @@
       <h2 class="section-title">ABOUT</h2>
       <div class="section-line"></div>
     </div>
-
-    <!-- FIX 4 — new bio text, 3 paragraphs -->
     <p class="about-bio reveal" style="transition-delay:.08s">
       Hi, I'm Sarvesh. I currently work in enterprise analytics, focusing primarily on the Microsoft data ecosystem — Power BI, the Power Platform, and modern analytics tools such as Microsoft Fabric. I'm also <em>Microsoft Certified</em> in Power BI and Fabric.
     </p>
@@ -617,8 +582,6 @@
     <p class="about-bio-plain reveal" style="transition-delay:.24s">
       Over time I plan to expand this portfolio to include more of my work in the Microsoft ecosystem — including Power BI dashboards, analytics solutions, and other data projects. For now, this space highlights some of the projects that shaped my early interest in data visualization and analytics.
     </p>
-
-    <!-- FIX 3 — every chip is highlighted -->
     <div class="skills-grid reveal" style="transition-delay:.32s">
       <span class="skill-chip">Power BI</span><span class="skill-chip">Microsoft Fabric</span>
       <span class="skill-chip">Tableau</span><span class="skill-chip">DAX</span>
@@ -637,7 +600,6 @@
   </div>
 </section>
 
-<!-- CAREER -->
 <section id="career">
   <div style="max-width:960px; margin:0 auto;">
     <div class="section-header reveal">
@@ -651,8 +613,7 @@
         <div class="tl-date">May 2022 — Present</div>
         <div class="tl-role">Analytics and Reporting Specialist</div>
         <div class="tl-company">Bank of Montreal · Remote, Canada</div>
-        <!-- FIX 5 — new description, $100K replaced -->
-        <p class="tl-desc">Owned and delivered a centralized Engineering & Platforms Resiliency Reporting Suite with 30+ Power BI reports, serving as the single source of truth for senior stakeholders. From automated vulnerability reporting to centralized resiliency dashboards used by senior stakeholders — I design analytics systems that reduce manual reporting and improve decision visibility. Architected an Observability & Alert Management dashboard using scalable data models and advanced DAX for proactive risk detection. Built the Metrics Book of Record and deployed a Power Apps approval solution for Key Wins with sequential workflows and real-time monitoring.</p>
+        <p class="tl-desc">Owned and delivered a centralized Engineering &amp; Platforms Resiliency Reporting Suite with 30+ Power BI reports, serving as the single source of truth for senior stakeholders. From automated vulnerability reporting to centralized resiliency dashboards used by senior stakeholders — I design analytics systems that reduce manual reporting and improve decision visibility. Architected an Observability &amp; Alert Management dashboard using scalable data models and advanced DAX for proactive risk detection. Built the Metrics Book of Record and deployed a Power Apps approval solution for Key Wins with sequential workflows and real-time monitoring.</p>
         <div class="tl-tags"><span class="tl-tag">Microsoft Fabric</span><span class="tl-tag">Power BI</span><span class="tl-tag">Power Automate</span><span class="tl-tag">Power Apps</span><span class="tl-tag">SQL</span><span class="tl-tag">DAX</span><span class="tl-tag">Amazon Redshift</span></div>
       </div>
       <div class="tl-item">
@@ -667,7 +628,6 @@
   </div>
 </section>
 
-<!-- CERTIFICATIONS -->
 <section id="certifications">
   <div class="section-header reveal">
     <span class="section-num">03 /</span>
@@ -721,7 +681,6 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="section-header reveal">
     <span class="section-num">04 /</span>
@@ -729,7 +688,6 @@
     <div class="section-line"></div>
   </div>
   <div class="projects-grid">
-
     <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/IndiaCOVID-19Hotspots/IndiaCOVID-193rdJuly" target="_blank" class="project-card reveal">
       <div class="project-media">
         <img src="assets/covid_hotspots.png" alt="India COVID-19 Hotspots" />
@@ -743,7 +701,6 @@
         </div>
       </div>
     </a>
-
     <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/HamburgerMenuwithNavigationFunctionality/ExecutiveSummary" target="_blank" class="project-card reveal" style="transition-delay:.1s">
       <div class="project-media">
         <img src="assets/executive_summary.png" alt="Executive Summary Dashboard" />
@@ -757,7 +714,6 @@
         </div>
       </div>
     </a>
-
     <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/RottentomatoesTop200Movies/Dashboard4" target="_blank" class="project-card reveal" style="transition-delay:.2s">
       <div class="project-media">
         <img src="assets/rotten_tomatoes_list.png" alt="Rotten Tomatoes Top 200" />
@@ -771,11 +727,9 @@
         </div>
       </div>
     </a>
-
   </div>
 </section>
 
-<!-- EDUCATION -->
 <section id="education">
   <div class="section-header reveal">
     <span class="section-num">05 /</span>
@@ -797,13 +751,12 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="contact-eyebrow reveal">Open to new opportunities · Vancouver, Canada</div>
   <div class="contact-heading reveal" style="transition-delay:.1s">LET'S BUILD<br>SOMETHING <span>DATA-DRIVEN.</span></div>
   <p class="contact-sub reveal" style="transition-delay:.2s">Open to senior BI roles, freelance dashboards,<br>and Power Platform consulting.</p>
   <div class="contact-links reveal" style="transition-delay:.3s">
-    <a href="/cdn-cgi/l/email-protection#6e1d0f1c180b1d06050f02170f002e09030f0702400d0103" class="btn btn-primary"><span class="btn-fill"></span>Email Me</a>
+    <a href="mailto:sarveshkalyan@gmail.com" class="btn btn-primary"><span class="btn-fill"></span>Email Me</a>
     <a href="https://linkedin.com/in/sarveshkalyan" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>LinkedIn</a>
     <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>Tableau Public</a>
     <a href="assets/resume.pdf" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>Resume PDF</a>
@@ -816,11 +769,8 @@
   <span class="footer-text">Vancouver, Canada</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script data-goatcounter="https://kalyansarvesh.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
-  
-  // FIX 7 — cursor only on real pointer/hover devices
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const cursorDot  = document.getElementById('cursor');
     const cursorRing = document.getElementById('cursor-ring');
@@ -838,7 +788,6 @@
     });
   }
 
-  // FIX 6 — hamburger
   const ham = document.getElementById('hamburger');
   const mob = document.getElementById('mobileMenu');
   ham.addEventListener('click', () => {
@@ -852,7 +801,6 @@
     document.body.style.overflow = '';
   }
 
-  // SCROLL PROGRESS + ACTIVE NAV
   const bar   = document.getElementById('progress');
   const secs  = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a');
@@ -864,13 +812,11 @@
     links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
   });
 
-  // SCROLL REVEAL
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: .07 });
   document.querySelectorAll('.reveal,.reveal-left,.tl-item').forEach(el => obs.observe(el));
 
-  // CERTS SLIDER
   const track    = document.getElementById('certsTrack');
   const dotsWrap = document.getElementById('certsDots');
   const cards    = track.querySelectorAll('.cert-card');
@@ -896,7 +842,6 @@
   buildDots();
   window.addEventListener('resize', () => { idx = 0; goTo(0); });
 
-  // THEME TOGGLE
   const themeBtn = document.getElementById('themeToggle');
   const saved = localStorage.getItem('theme');
   if (saved === 'light') document.documentElement.classList.add('light');
@@ -913,9 +858,11 @@
       : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
   }
 </script>
+
+<!-- VISITOR TRACKING -->
 <script>
   (function() {
-    fetch('https://ipwho.is/')
+    fetch('https://ipapi.co/json/')
       .then(r => r.json())
       .then(ip => {
         const ua = navigator.userAgent;
@@ -936,10 +883,10 @@
           method: 'POST',
           body: JSON.stringify({
             timestamp: new Date().toISOString(),
-            country:   ip.country,
+            country:   ip.country_name,
             region:    ip.region,
             city:      ip.city,
-            isp:       ip.connection?.isp || '',
+            isp:       ip.org,
             referrer:  document.referrer || 'Direct',
             page:      window.location.href,
             device:    device,
@@ -949,7 +896,7 @@
             language:  navigator.language
           })
         });
-      });
+      }).catch(()=>{});
   })();
 </script>
 </body>
