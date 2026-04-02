@@ -38,7 +38,6 @@
     html { scroll-behavior:smooth }
     body { background:var(--bg); color:var(--text); font-family:var(--sans); overflow-x:hidden; cursor:none }
 
-    /* GRAIN */
     body::before {
       content:''; position:fixed; inset:-100%; z-index:0; pointer-events:none; width:300%; height:300%;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
@@ -226,7 +225,7 @@
     .reveal-left { opacity:0; transform:translateX(-28px); transition:opacity .8s var(--ease), transform .8s var(--ease) }
     .reveal-left.visible { opacity:1; transform:none }
 
-    #about { padding:9rem 4rem; display:grid; grid-template-columns:210px 1fr; gap:6rem; align-items:start }
+    #about { padding:9rem 4rem; display:grid; grid-template-columns:170px 1fr; gap:5rem; align-items:start }
     .about-portrait { width:100%; aspect-ratio:3/4; background:var(--s2); border:1px solid var(--b2); position:relative; overflow:hidden }
     .about-portrait::after {
       content:''; position:absolute; inset:0; pointer-events:none;
@@ -333,20 +332,50 @@
     }
     .certs-arrow:hover { border-color:var(--blue); color:var(--blueb); box-shadow:0 0 12px var(--blueglow) }
 
+    /* ── PROJECTS ── */
     #projects { padding:7rem 4rem }
-    .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--b1); border:1px solid var(--b1); overflow:hidden }
+
+    .projects-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    /* standard card */
     .project-card {
       background:var(--s1); position:relative; overflow:hidden;
       display:flex; flex-direction:column; transition:background .35s var(--ease);
       text-decoration:none; cursor:none;
+      border:1px solid var(--b2);
     }
     .project-card::before {
       content:''; position:absolute; top:0; left:0; right:0; height:2px; z-index:4;
       background:linear-gradient(90deg, var(--blue), var(--blueb));
       transform:scaleX(0); transform-origin:left; transition:transform .45s var(--ease);
     }
-    .project-card:hover { background:var(--s2) }
+    .project-card:hover { background:var(--s2); border-color:rgba(77,127,214,.35) }
     .project-card:hover::before { transform:scaleX(1) }
+
+    /* ── FEATURED card ── */
+    .project-card.featured {
+      border:2px solid rgba(122,174,245,.7);
+      box-shadow:0 0 0 1px rgba(122,174,245,.25), 0 0 35px rgba(77,127,214,.45), 0 0 70px rgba(77,127,214,.2), inset 0 0 50px rgba(77,127,214,.08);
+      animation:featuredPulse 2.8s ease infinite;
+    }
+    @keyframes featuredPulse {
+      0%,100% { box-shadow:0 0 0 1px rgba(122,174,245,.25), 0 0 35px rgba(77,127,214,.45), 0 0 70px rgba(77,127,214,.2), inset 0 0 50px rgba(77,127,214,.08) }
+      50%      { box-shadow:0 0 0 2px rgba(122,174,245,.6),  0 0 60px rgba(122,174,245,.7), 0 0 120px rgba(77,127,214,.3), inset 0 0 70px rgba(77,127,214,.14) }
+    }
+    .project-card.featured::before { background:linear-gradient(90deg, var(--blueb), #c8e4ff, var(--blueb)); height:3px; transform:scaleX(1) }
+    .project-card.featured:hover { box-shadow:0 0 0 2px rgba(122,174,245,.8), 0 0 80px rgba(122,174,245,.8) }
+
+    .featured-badge {
+      position:absolute; top:12px; left:12px; z-index:10;
+      font-family:var(--mono); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase;
+      padding:.28rem .75rem;
+      background:var(--blueb); color:var(--bg);
+      font-weight:700;
+    }
+
     .project-media { width:100%; aspect-ratio:16/9; background:var(--bg); position:relative; overflow:hidden }
     .project-media img {
       width:100%; height:100%; object-fit:cover;
@@ -372,6 +401,96 @@
       color:var(--sub); font-size:.75rem; flex-shrink:0; transition:all .25s;
     }
     .project-card:hover .project-link { border-color:var(--blueb); color:var(--blueb); transform:rotate(45deg); box-shadow:0 0 12px var(--blueglow) }
+
+    /* coming soon cards */
+    .project-img-placeholder {
+      width:100%; height:100%;
+      background:linear-gradient(135deg, var(--s2) 0%, var(--b1) 100%);
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+    }
+    .project-img-placeholder::after {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(77,127,214,.04) 18px, rgba(77,127,214,.04) 19px);
+    }
+    .coming-soon-lbl {
+      font-family:var(--mono); font-size:.56rem; color:var(--muted);
+      letter-spacing:.1em; text-transform:uppercase;
+    }
+    .coming-soon { opacity:.75 }
+    .coming-soon:hover { opacity:1 }
+
+    /* pagination */
+    .projects-pagination {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top:1.8rem; padding:0 2px;
+    }
+    .proj-page-info { font-family:var(--mono); font-size:.6rem; color:var(--muted); letter-spacing:.1em }
+    .proj-arrows { display:flex; gap:.5rem }
+    .proj-arrow {
+      width:38px; height:38px; border:1px solid var(--b2); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      color:var(--sub); background:transparent; font-size:.85rem; transition:all .2s;
+    }
+    .proj-arrow:hover:not(:disabled) { border-color:var(--blue); color:var(--blueb); box-shadow:0 0 12px var(--blueglow) }
+    .proj-arrow:disabled { opacity:.25; cursor:not-allowed }
+
+    /* ── PROJECT MODAL ── */
+    .proj-modal-overlay {
+      display:none; position:fixed; inset:0; z-index:800;
+      background:rgba(3,5,13,.92); backdrop-filter:blur(16px);
+      overflow-y:auto; padding:2rem 1rem;
+    }
+    .proj-modal-overlay.open { display:flex; align-items:flex-start; justify-content:center }
+    .proj-modal {
+      background:var(--s1); border:1px solid rgba(122,174,245,.2);
+      max-width:860px; width:100%; position:relative;
+      box-shadow:0 0 80px rgba(77,127,214,.2);
+      animation:modalIn .35s var(--ease);
+    }
+    @keyframes modalIn { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+    .proj-modal-close {
+      position:absolute; top:1.2rem; right:1.2rem; z-index:10;
+      width:32px; height:32px; border:1px solid var(--b2); background:var(--s2);
+      color:var(--sub); font-size:1rem; cursor:pointer; display:flex;
+      align-items:center; justify-content:center; transition:all .2s;
+    }
+    .proj-modal-close:hover { border-color:var(--blueb); color:var(--blueb) }
+    .proj-modal-hero { width:100%; aspect-ratio:16/9; overflow:hidden; position:relative }
+    .proj-modal-hero img { width:100%; height:100%; object-fit:cover }
+    .proj-modal-hero::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:40%;
+      background:linear-gradient(transparent, var(--s1));
+    }
+    .proj-modal-body { padding:2.4rem 2.8rem 2.8rem }
+    .proj-modal-eyebrow { font-family:var(--mono); font-size:.58rem; color:var(--blue); letter-spacing:.2em; text-transform:uppercase; margin-bottom:.8rem }
+    .proj-modal-title { font-family:var(--display); font-size:clamp(1.6rem,3vw,2.4rem); color:var(--text); letter-spacing:.06em; line-height:1.1; margin-bottom:1.2rem }
+    .proj-modal-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:2rem }
+    .proj-modal-tag { font-family:var(--mono); font-size:.58rem; padding:.18rem .6rem; background:var(--bluedim); border:1px solid rgba(77,127,214,.25); color:var(--blueb); letter-spacing:.06em }
+    .proj-modal-section { margin-bottom:2.8rem; padding-bottom:.4rem }
+    .proj-modal-section-title { font-family:var(--mono); font-size:.62rem; color:var(--blue); letter-spacing:.18em; text-transform:uppercase; margin-bottom:.8rem; padding-bottom:.5rem; border-bottom:1px solid var(--b2) }
+    .proj-modal-text { font-family:var(--mono); font-size:.78rem; color:var(--sub); line-height:2 }
+    .proj-modal-list { list-style:none; }
+    .proj-modal-list li { font-family:var(--mono); font-size:.78rem; color:var(--sub); line-height:1.9; padding-left:1.2rem; position:relative }
+    .proj-modal-list li::before { content:'—'; position:absolute; left:0; color:var(--blue) }
+    .proj-modal-img { width:100%; border:1px solid var(--b2); margin:1rem 0; display:block; max-height:480px; object-fit:contain; background:var(--bg) }
+    .proj-modal-img-caption { font-family:var(--mono); font-size:.58rem; color:var(--muted); text-align:center; margin-top:-.5rem; margin-bottom:1.2rem; letter-spacing:.06em }
+    .proj-modal-video {
+      width:100%; aspect-ratio:16/9; background:var(--bg);
+      border:1px solid var(--b2); display:flex; align-items:center; justify-content:center;
+      margin-top:1rem;
+    }
+    .proj-modal-video video { width:100%; height:100%; object-fit:contain }
+    .proj-modal-video-placeholder {
+      font-family:var(--mono); font-size:.65rem; color:var(--muted); text-align:center; line-height:2;
+    }
+    .proj-modal-link {
+      display:inline-flex; align-items:center; gap:.5rem; margin-top:1.5rem;
+      font-family:var(--mono); font-size:.65rem; letter-spacing:.1em; text-transform:uppercase;
+      padding:.55rem 1.2rem; border:1px solid var(--blue); color:var(--blueb);
+      text-decoration:none; transition:all .22s;
+    }
+    .proj-modal-link:hover { background:var(--blue); color:var(--bg) }
 
     #education { padding:3.5rem 4rem; background:var(--s1); border-top:1px solid var(--b1); border-bottom:1px solid var(--b1) }
     .edu-row { display:flex; align-items:stretch }
@@ -419,7 +538,7 @@
       .hero-role { font-size:.74rem }
 
       #about { grid-template-columns:1fr; padding:5rem 1.5rem; gap:3rem }
-      .about-portrait { max-width:190px; margin:0 auto }
+      .about-portrait { max-width:140px; margin:0 auto }
       #career { padding:5rem 1.5rem }
       .tl-desc { max-width:100% }
 
@@ -427,8 +546,17 @@
       .cert-card { width:calc(80vw) !important }
 
       #projects { padding:5rem 1.5rem }
-      .projects-grid { grid-template-columns:1fr; gap:1px }
+      .projects-grid { grid-template-columns:repeat(2,1fr); gap:8px }
       .project-card { cursor:pointer }
+      .project-media { aspect-ratio:16/9 }
+      .project-body { padding:.85rem .9rem .9rem }
+      .project-title { font-size:.78rem; margin-bottom:.3rem; line-height:1.25 }
+      .project-desc { font-size:.62rem; line-height:1.65; margin-bottom:.65rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden }
+      .project-footer { padding-top:.55rem }
+      .project-tool { font-size:.52rem; padding:.15rem .42rem }
+      .project-link { width:22px; height:22px; font-size:.6rem }
+      .featured-badge { font-size:.48rem; padding:.2rem .5rem }
+      .projects-pagination { margin-bottom:.8rem }
 
       #education { padding:3rem 1.5rem }
       .edu-row { flex-direction:column; gap:0 }
@@ -438,6 +566,8 @@
 
       #contact { padding:6rem 1.5rem }
       footer { padding:1.4rem 1.5rem; flex-direction:column; gap:.8rem; text-align:center }
+
+      .proj-modal-body { padding:1.6rem }
     }
 
     /* LIGHT THEME */
@@ -466,6 +596,8 @@
     html.light .project-media img { filter:brightness(.92) saturate(.8) contrast(1.05) }
     html.light .project-card:hover .project-media img { filter:brightness(1) saturate(1) }
     html.light .about-portrait-inner { background:repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(0,0,0,.02) 20px, rgba(0,0,0,.02) 21px) }
+    html.light .proj-modal-overlay { background:rgba(200,210,230,.92) }
+    html.light .proj-modal { background:var(--s1) }
 
     #themeToggle {
       width:28px; height:28px; border:1px solid var(--b2); background:transparent;
@@ -681,54 +813,385 @@
   </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
   <div class="section-header reveal">
     <span class="section-num">04 /</span>
     <h2 class="section-title">PROJECTS</h2>
     <div class="section-line"></div>
   </div>
-  <div class="projects-grid">
-    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/IndiaCOVID-19Hotspots/IndiaCOVID-193rdJuly" target="_blank" class="project-card reveal">
+
+  <!-- top pagination -->
+  <div class="projects-pagination" id="projPaginationTop" style="margin-bottom:1.2rem">
+    <span class="proj-page-info" id="projPageInfoTop"></span>
+    <div class="proj-arrows">
+      <button class="proj-arrow" id="projPrevTop">←</button>
+      <button class="proj-arrow" id="projNextTop">→</button>
+    </div>
+  </div>
+
+  <!-- all cards, JS shows 9 at a time -->
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- 01 ★ FEATURED: ITSM — opens modal -->
+    <div class="project-card featured reveal" onclick="openModal('itsm')" style="cursor:pointer">
+      <div class="featured-badge">★ Featured</div>
       <div class="project-media">
-        <img src="assets/covid_hotspots.png" alt="India COVID-19 Hotspots" />
+        <img src="assets/itsm_dashboard.png" alt="ITSM Analytics Platform" />
       </div>
+      <div class="project-body">
+        <div class="project-title">Enterprise ITSM Analytics Platform</div>
+        <p class="project-desc">End-to-end analytics solution using Microsoft Fabric + Power BI. Medallion architecture, star schema modeling, and KPI-driven executive reporting for SLA compliance and incident performance.</p>
+        <div class="project-footer">
+          <div class="project-tools">
+            <span class="project-tool">Microsoft Fabric</span>
+            <span class="project-tool">Power BI</span>
+            <span class="project-tool">DAX</span>
+          </div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/IndiaCOVID-19Hotspots/IndiaCOVID-193rdJuly" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/covid_hotspots.png" alt="India COVID-19 Hotspots" /></div>
       <div class="project-body">
         <div class="project-title">India COVID-19 Hotspot Tracker</div>
-        <p class="project-desc">Proportional bubble map visualising district-level case density across India — circle size encodes case volume so the heaviest clusters surface instantly. Built during the peak of the 2020 outbreak for rapid public health insight.</p>
+        <p class="project-desc">Proportional bubble map visualising district-level case density across India — circle size encodes case volume so the heaviest clusters surface instantly.</p>
         <div class="project-footer">
           <div class="project-tools"><span class="project-tool">Tableau</span></div>
           <div class="project-link">↗</div>
         </div>
       </div>
     </a>
-    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/HamburgerMenuwithNavigationFunctionality/ExecutiveSummary" target="_blank" class="project-card reveal" style="transition-delay:.1s">
-      <div class="project-media">
-        <img src="assets/executive_summary.png" alt="Executive Summary Dashboard" />
-      </div>
+
+    <!-- 03 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/HamburgerMenuwithNavigationFunctionality/ExecutiveSummary" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/executive_summary.png" alt="Executive Summary Dashboard" /></div>
       <div class="project-body">
         <div class="project-title">Executive Summary Dashboard</div>
-        <p class="project-desc">Multi-page business intelligence dashboard with a custom hamburger nav. Shows profit by country and city on a live map alongside year-over-year sales trends — demonstrating advanced layout design and Tableau navigation patterns.</p>
+        <p class="project-desc">Multi-page BI dashboard with custom hamburger nav. Shows profit by country and city on a live map alongside year-over-year sales trends.</p>
         <div class="project-footer">
           <div class="project-tools"><span class="project-tool">Tableau</span></div>
           <div class="project-link">↗</div>
         </div>
       </div>
     </a>
-    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/RottentomatoesTop200Movies/Dashboard4" target="_blank" class="project-card reveal" style="transition-delay:.2s">
-      <div class="project-media">
-        <img src="assets/rotten_tomatoes_list.png" alt="Rotten Tomatoes Top 200" />
-      </div>
+
+    <!-- 04 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan/viz/RottentomatoesTop200Movies/Dashboard4" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/rotten_tomatoes_list.png" alt="Rotten Tomatoes Top 200" /></div>
       <div class="project-body">
         <div class="project-title">Rotten Tomatoes — Top 200 of the 2010s</div>
-        <p class="project-desc">Dual-panel dashboard comparing critic vs audience scores via a sized bubble scatter plot, paired with genre trend lines from 2011–2019. Drama dominated; Animation held steady. A strong example of storytelling through chart design.</p>
+        <p class="project-desc">Dual-panel dashboard comparing critic vs audience scores via bubble scatter, paired with genre trend lines from 2011–2019.</p>
         <div class="project-footer">
           <div class="project-tools"><span class="project-tool">Tableau</span></div>
           <div class="project-link">↗</div>
         </div>
       </div>
     </a>
+
+    <!-- 05 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/titanic_survival.png" alt="Titanic Survival Stats" /></div>
+      <div class="project-body">
+        <div class="project-title">Titanic Survival Stats</div>
+        <p class="project-desc">Sankey diagram mapping embarkation ports through survival outcomes to age bands — visualising how boarding location and age intersected with survival probability.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 06 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/mental_health.png" alt="Mental Health Comparison" /></div>
+      <div class="project-body">
+        <div class="project-title">Mental Health Comparison</div>
+        <p class="project-desc">Dot-strip chart comparing common mental disorder prevalence between men and women across age categories — sourced from NHS Digital England survey data.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 07 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/penguin_flipper.png" alt="Penguin Flipper & Bill Length" /></div>
+      <div class="project-body">
+        <div class="project-title">Penguin Flipper &amp; Bill Length</div>
+        <p class="project-desc">Radial spike chart comparing flipper and bill measurements across Adelie, Chinstrap, and Gentoo penguin species relative to population averages.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 08 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/homosexuality_acceptance.png" alt="Global Divide on Acceptance of Homosexuality" /></div>
+      <div class="project-body">
+        <div class="project-title">Global Divide — Acceptance of Homosexuality</div>
+        <p class="project-desc">Slope chart across 25 countries showing how religious importance correlates with acceptance of homosexuality, based on 2019 Pew Research data.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 09 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/women_in_power.png" alt="Women in Power" /></div>
+      <div class="project-body">
+        <div class="project-title">Women in Power — Political Representation</div>
+        <p class="project-desc">Unit chart showing % of parliamentary seats held by women across countries, from Rwanda at 61% to Yemen at 0.3% — sourced from World Bank data (2019).</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 10 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/economic_output.png" alt="Economic Output NY vs TX" /></div>
+      <div class="project-body">
+        <div class="project-title">Economic Output — New York vs Texas</div>
+        <p class="project-desc">GDP comparison chart tracking New York and Texas economic output from 2001–2018, showing Texas overtaking New York and the year-by-year difference.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 11 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/data_assets.png" alt="Data Assets & Culture" /></div>
+      <div class="project-body">
+        <div class="project-title">Data Assets &amp; Data Culture</div>
+        <p class="project-desc">Horizontal bar chart visualising industry distribution of data practitioners from a DataIQ survey — Financial Services leading at 25.1% of 103 responses.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 12 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/aircraft_wildlife.png" alt="Aircraft Wildlife Strikes" /></div>
+      <div class="project-body">
+        <div class="project-title">Aircraft Wildlife Strikes</div>
+        <p class="project-desc">Tableau dashboard analysing 174K wildlife strike incidents from 1990–2015 — covering operator rankings, flight phase risk, visibility conditions, and consequences.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 13 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/website_traffic.png" alt="US Federal Website Traffic" /></div>
+      <div class="project-body">
+        <div class="project-title">U.S. Federal Government Website Traffic</div>
+        <p class="project-desc">Dashboard tracking analytics.usa.gov visits by device, browser, OS, and time — showing cyclical traffic patterns across desktop and mobile from Nov 2019 to Jan 2020.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 14 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/kiva_loans.png" alt="Kiva Loans" /></div>
+      <div class="project-body">
+        <div class="project-title">Kiva Loans — Gender &amp; Sector Analysis</div>
+        <p class="project-desc">Global map and trend dashboard for 671K Kiva microloans — showing female borrowers at 72.7%, top sectors by loan count, and loan volume over time.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 15 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/cricket_centuries.png" alt="Most Centuries in Cricket" /></div>
+      <div class="project-body">
+        <div class="project-title">Most Centuries in Cricket — India</div>
+        <p class="project-desc">Interactive Tableau viz showing top Indian cricketers by century count across ODIs and Tests, with Sachin Tendulkar leading at 100, filterable by team.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 16 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/time_money_energy.png" alt="Time Money Energy" /></div>
+      <div class="project-body">
+        <div class="project-title">Time, Money &amp; Energy Conundrum</div>
+        <p class="project-desc">Conceptual data art visualising the trade-off between time, money, and energy across life stages — Young, Adult, Old, and Me — using wave-form area charts.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 17 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/top_tv_shows.png" alt="Top TV Shows" /></div>
+      <div class="project-body">
+        <div class="project-title">Top TV Shows — Netflix &amp; Prime Video</div>
+        <p class="project-desc">Interactive dashboard listing top-rated IMDB shows per year on Netflix and Prime Video, with a rating distribution strip along the bottom for quick comparison.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 18 -->
+    <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" target="_blank" class="project-card reveal">
+      <div class="project-media"><img src="assets/us_population.png" alt="US Population Density" /></div>
+      <div class="project-body">
+        <div class="project-title">US Population Density</div>
+        <p class="project-desc">Hexagonal binning map of the contiguous United States showing population density distribution by geographic tile — built with Tableau's custom geocoding.</p>
+        <div class="project-footer">
+          <div class="project-tools"><span class="project-tool">Tableau</span></div>
+          <div class="project-link">↗</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="projects-pagination" id="projPagination">
+    <span class="proj-page-info" id="projPageInfo"></span>
+    <div class="proj-arrows">
+      <button class="proj-arrow" id="projPrev">←</button>
+      <button class="proj-arrow" id="projNext">→</button>
+    </div>
   </div>
 </section>
+
+<!-- ── ITSM MODAL ── -->
+<div class="proj-modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="proj-modal" id="modal-itsm">
+    <button class="proj-modal-close" onclick="closeModal()">✕</button>
+
+    <div class="proj-modal-hero">
+      <img src="assets/itsm_dashboard.png" alt="ITSM Dashboard" />
+    </div>
+
+    <div class="proj-modal-body">
+      <div class="proj-modal-eyebrow">Microsoft Fabric · Power BI · End-to-End</div>
+      <div class="proj-modal-title">Enterprise ITSM Analytics Platform</div>
+      <div class="proj-modal-tags">
+        <span class="proj-modal-tag">Microsoft Fabric</span>
+        <span class="proj-modal-tag">Power BI</span>
+        <span class="proj-modal-tag">Medallion Architecture</span>
+        <span class="proj-modal-tag">DAX</span>
+        <span class="proj-modal-tag">Dataflow Gen2</span>
+        <span class="proj-modal-tag">Star Schema</span>
+        <span class="proj-modal-tag">Power Query</span>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Summary</div>
+        <p class="proj-modal-text">Built an end-to-end ITSM analytics solution using Microsoft Fabric and Power BI, including medallion architecture, dimensional modeling, and KPI-driven reporting for SLA compliance and operational performance.</p>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Problem / Objective</div>
+        <ul class="proj-modal-list">
+          <li>Raw incident data was not analytics-ready</li>
+          <li>Needed a structured pipeline for trusted reporting</li>
+          <li>Goal was to track incident trends, SLA breaches, priority risk, and service bottlenecks</li>
+        </ul>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Architecture Overview</div>
+        <p class="proj-modal-text">Raw incident data was ingested into a Fabric Lakehouse, transformed through Bronze → Silver → Gold layers using Dataflow Gen2, modeled into a star schema, and exposed through a semantic model for executive reporting in Power BI.</p>
+        <img src="assets/itsm_arch.png" alt="Architecture Overview" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Architecture Overview</div>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Workspace &amp; Data Foundation</div>
+        <p class="proj-modal-text">Fabric workspace containing the full solution architecture — Lakehouse, transformation layers, semantic model, and final dashboard.</p>
+        <img src="assets/itsm_workspace.png" alt="Workspace Overview" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Workspace Overview</div>
+        <img src="assets/itsm_lakehouse.png" alt="Lakehouse Medallion Layers" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Lakehouse Medallion Layers (Bronze / Silver / Gold)</div>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Transformation &amp; Modelling</div>
+        <img src="assets/itsm_silver.png" alt="Silver Transformation Layer" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Silver Layer — Data type standardization, SLA logic, quality flags</div>
+        <img src="assets/itsm_gold.png" alt="Gold Analytical Model" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Gold Layer — Fact table + dimension curation</div>
+        <img src="assets/itsm_schema.png" alt="Semantic Model Star Schema" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Semantic Model — Star schema with incident fact + reusable dimensions</div>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Executive Dashboard</div>
+        <img src="assets/itsm_dashboard.png" alt="Executive Dashboard" class="proj-modal-img" />
+        <div class="proj-modal-img-caption">Executive Reporting Layer — Incident volume, SLA performance, operational quality</div>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Key Insights</div>
+        <ul class="proj-modal-list">
+          <li>SLA breaches increased during specific periods despite stable incident volume</li>
+          <li>A small number of categories contributed to a large share of incidents</li>
+          <li>Reopened incidents highlighted potential resolution quality issues</li>
+          <li>Priority distribution revealed concentration of operational risk</li>
+        </ul>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Design Decisions</div>
+        <ul class="proj-modal-list">
+          <li>Prioritized data transformation in the pipeline layer (Dataflow Gen2) instead of pushing logic into the reporting layer</li>
+          <li>Designed a star schema (fact + dimensions) to ensure scalability and reusability of metrics</li>
+          <li>Standardized business logic (SLA, reopen logic, durations) in the Gold layer for consistent reporting</li>
+          <li>Focused on dual-axis trend analysis (volume vs SLA breaches) to surface operational bottlenecks</li>
+        </ul>
+      </div>
+
+      <div class="proj-modal-section">
+        <div class="proj-modal-section-title">Walkthrough Video</div>
+        <div class="proj-modal-video">
+          <!-- Replace src with your actual video file path, e.g. assets/itsm_walkthrough.mp4 -->
+          <video controls>
+            <source src="assets/itsm_walkthrough.mp4" type="video/mp4" />
+            <div class="proj-modal-video-placeholder">
+              Video not loaded.<br>Add your walkthrough video to assets/itsm_walkthrough.mp4
+            </div>
+          </video>
+        </div>
+      </div>
+
+      <a href="https://www.kaggle.com/datasets/ahanwadi/itsm-data" target="_blank" class="proj-modal-link">
+        View Data Source ↗
+      </a>
+    </div>
+  </div>
+</div>
 
 <section id="education">
   <div class="section-header reveal">
@@ -754,9 +1217,9 @@
 <section id="contact">
   <div class="contact-eyebrow reveal">Open to new opportunities · Vancouver, Canada</div>
   <div class="contact-heading reveal" style="transition-delay:.1s">LET'S BUILD<br>SOMETHING <span>DATA-DRIVEN.</span></div>
-  <p class="contact-sub reveal" style="transition-delay:.2s">Open to senior BI roles, freelance dashboards,<br>and Power Platform consulting.</p>
+  <p class="contact-sub reveal" style="transition-delay:.2s">Open to senior BI roles and Power Platform consulting.</p>
   <div class="contact-links reveal" style="transition-delay:.3s">
-    <a href="mailto:sarveshkalyan@gmail.com" class="btn btn-primary"><span class="btn-fill"></span>Email Me</a>
+    <a href="/cdn-cgi/l/email-protection#99eaf8ebeffceaf1f2f8f5e0f8f7d9fef4f8f0f5b7faf6f4" class="btn btn-primary"><span class="btn-fill"></span>Email Me</a>
     <a href="https://linkedin.com/in/sarveshkalyan" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>LinkedIn</a>
     <a href="https://public.tableau.com/app/profile/sarvesh.kalyan" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>Tableau Public</a>
     <a href="assets/resume.pdf" class="btn btn-ghost" target="_blank"><span class="btn-fill"></span>Resume PDF</a>
@@ -769,8 +1232,9 @@
   <span class="footer-text">Vancouver, Canada</span>
 </footer>
 
-<script data-goatcounter="https://kalyansarvesh.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-goatcounter="https://kalyansarvesh.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
+  // CURSOR
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const cursorDot  = document.getElementById('cursor');
     const cursorRing = document.getElementById('cursor-ring');
@@ -788,6 +1252,7 @@
     });
   }
 
+  // HAMBURGER
   const ham = document.getElementById('hamburger');
   const mob = document.getElementById('mobileMenu');
   ham.addEventListener('click', () => {
@@ -801,6 +1266,7 @@
     document.body.style.overflow = '';
   }
 
+  // SCROLL PROGRESS + NAV
   const bar   = document.getElementById('progress');
   const secs  = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a');
@@ -812,11 +1278,13 @@
     links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
   });
 
+  // SCROLL REVEAL
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: .07 });
   document.querySelectorAll('.reveal,.reveal-left,.tl-item').forEach(el => obs.observe(el));
 
+  // CERTS SLIDER
   const track    = document.getElementById('certsTrack');
   const dotsWrap = document.getElementById('certsDots');
   const cards    = track.querySelectorAll('.cert-card');
@@ -840,8 +1308,60 @@
   document.getElementById('certsPrev').addEventListener('click', () => goTo(idx - 1));
   document.getElementById('certsNext').addEventListener('click', () => goTo(idx + 1));
   buildDots();
-  window.addEventListener('resize', () => { idx = 0; goTo(0); });
+  window.addEventListener('resize', () => { idx = 0; goTo(0); renderProjects(); });
 
+  // PROJECTS PAGINATION — only counts non-empty cards
+  const grid = document.getElementById('projectsGrid');
+  let projPage = 0;
+  const perPage = () => window.innerWidth < 1000 ? 6 : 9;
+  function getProjectCards() {
+    return Array.from(grid.querySelectorAll('.project-card')).filter(c => c.querySelector('.project-title'));
+  }
+  function renderProjects() {
+    const PER = perPage();
+    const all = getProjectCards();
+    const totalPages = Math.ceil(all.length / PER);
+    if (projPage >= totalPages) projPage = totalPages - 1;
+    const start = projPage * PER;
+    all.forEach((c, i) => {
+      c.style.display = (i >= start && i < start + PER) ? '' : 'none';
+    });
+    const info = all.length > PER ? `${projPage + 1} / ${totalPages}` : '';
+    document.getElementById('projPageInfo').textContent = info;
+    document.getElementById('projPageInfoTop').textContent = info;
+    const atStart = projPage === 0;
+    const atEnd = projPage >= totalPages - 1;
+    document.getElementById('projPrev').disabled = atStart;
+    document.getElementById('projNext').disabled = atEnd;
+    document.getElementById('projPrevTop').disabled = atStart;
+    document.getElementById('projNextTop').disabled = atEnd;
+    const show = all.length > PER ? '' : 'none';
+    document.getElementById('projPagination').style.display = show;
+    document.getElementById('projPaginationTop').style.display = show;
+  }
+  document.getElementById('projPrev').addEventListener('click', () => { projPage--; renderProjects(); document.getElementById('projects').scrollIntoView({behavior:'smooth'}); });
+  document.getElementById('projNext').addEventListener('click', () => { projPage++; renderProjects(); document.getElementById('projects').scrollIntoView({behavior:'smooth'}); });
+  document.getElementById('projPrevTop').addEventListener('click', () => { projPage--; renderProjects(); document.getElementById('projects').scrollIntoView({behavior:'smooth'}); });
+  document.getElementById('projNextTop').addEventListener('click', () => { projPage++; renderProjects(); document.getElementById('projects').scrollIntoView({behavior:'smooth'}); });
+  renderProjects();
+
+  // MODAL
+  const overlay = document.getElementById('modalOverlay');
+  function openModal(id) {
+    overlay.classList.add('open');
+    overlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === overlay) closeModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // THEME TOGGLE
   const themeBtn = document.getElementById('themeToggle');
   const saved = localStorage.getItem('theme');
   if (saved === 'light') document.documentElement.classList.add('light');
@@ -867,33 +1387,15 @@
       .then(ip => {
         const ua = navigator.userAgent;
         const device = /Mobi|Android/i.test(ua) ? 'Mobile' : 'Desktop';
-        const browser =
-          /Edg/.test(ua) ? 'Edge' :
-          /OPR|Opera/.test(ua) ? 'Opera' :
-          /Chrome/.test(ua) ? 'Chrome' :
-          /Safari/.test(ua) ? 'Safari' :
-          /Firefox/.test(ua) ? 'Firefox' : 'Other';
-        const os =
-          /Windows/.test(ua) ? 'Windows' :
-          /Mac OS/.test(ua) ? 'Mac' :
-          /Android/.test(ua) ? 'Android' :
-          /iPhone|iPad/.test(ua) ? 'iOS' :
-          /Linux/.test(ua) ? 'Linux' : 'Other';
+        const browser = /Edg/.test(ua)?'Edge':/OPR|Opera/.test(ua)?'Opera':/Chrome/.test(ua)?'Chrome':/Safari/.test(ua)?'Safari':/Firefox/.test(ua)?'Firefox':'Other';
+        const os = /Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':/Android/.test(ua)?'Android':/iPhone|iPad/.test(ua)?'iOS':/Linux/.test(ua)?'Linux':'Other';
         fetch('https://script.google.com/macros/s/AKfycbwqRbCnTPxlcSn5TsuovRCwID_IlQ-ZMpqyE857QiyyARor84WuB6V-A7m2EYeQEQ0Jow/exec', {
-          method: 'POST',
-          body: JSON.stringify({
-            timestamp: new Date().toISOString(),
-            country:   ip.country_name,
-            region:    ip.region,
-            city:      ip.city,
-            isp:       ip.org,
-            referrer:  document.referrer || 'Direct',
-            page:      window.location.href,
-            device:    device,
-            browser:   browser,
-            os:        os,
-            screen:    screen.width + 'x' + screen.height,
-            language:  navigator.language
+          method:'POST',
+          body:JSON.stringify({
+            timestamp:new Date().toISOString(),
+            country:ip.country_name, region:ip.region, city:ip.city, isp:ip.org,
+            referrer:document.referrer||'Direct', page:window.location.href,
+            device, browser, os, screen:screen.width+'x'+screen.height, language:navigator.language
           })
         });
       }).catch(()=>{});
